@@ -1,6 +1,6 @@
 import styles from './AppStyles.module.css'
 import { Header } from './components/header/header'
-import { Task } from './components/tasks/tasks'
+import { Tasks } from './components/tasks/tasks'
 import './global.css'
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
   return (
     <main className={styles.main}>
       <Header />
-      <Task />
+      <Tasks />
     </main>
   )
 }
