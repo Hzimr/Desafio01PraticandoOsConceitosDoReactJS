@@ -7,10 +7,10 @@ import './global.css'
 export function App() {
 
   return (
-    <div>
+    <main className={styles.main}>
       <Header />
       <NewTask />
       <Task />
-    </div>
+    </main>
   )
 }
