@@ -2,59 +2,59 @@ import styles from './tasksStyles.module.css'
 import plus from '../../assets/plus.svg'
 import { NoTask } from '../notask/notask'
 import { ChangeEvent, FormEvent, InvalidEvent, useState, useId } from 'react'
-import { Task } from '../task/task'
+import { Item } from '../item/item'
 
 export function Tasks() {
   const id = useId();
-  const [task, setTask] = useState<string[]>([])
+  const [item, setItem] = useState<string[]>([])
 
-  const [newTaskText, setNewTaskText] = useState<string>('')
+  const [newItemText, setNewItemText] = useState<string>('')
 
-  function handleCreateNewTask(event: FormEvent) {
+  function handleCreateNewItem(event: FormEvent) {
     event.preventDefault()
 
-    setTask([...task, newTaskText])
-    setNewTaskText('')
+    setItem([...item, newItemText])
+    setNewItemText('')
   }
 
-  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>){
+  function handleNewItemChange(event: ChangeEvent<HTMLInputElement>){
     event.target.setCustomValidity('');
-    setNewTaskText(event.target.value);
+    setNewItemText(event.target.value);
 
   }
 
-  function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>){
+  function handleNewItemInvalid(event: InvalidEvent<HTMLInputElement>){
     event.target.setCustomValidity('Esse campo é obrigatório')
   }
 
-  function deleteTask(taskToDelete: string) {
-    const tasksWithoutDeletedOne = task.filter(task => {
-      return task !== taskToDelete
+  function deleteItem(itemToDelete: string) {
+    const tasksWithoutDeletedOne = item.filter(item => {
+      return item !== itemToDelete
     })
 
-    setTask(tasksWithoutDeletedOne)
+    setItem(tasksWithoutDeletedOne)
   }
 
-  const isNewTaskEmpty = newTaskText.length === 0;
+  const isNewItemEmpty = newItemText.length === 0;
 
   return (
     <div className={styles.wrapper}>
       <div>
-      <form className={styles.form} onSubmit={handleCreateNewTask}>
+      <form className={styles.form} onSubmit={handleCreateNewItem}>
         <input
-          name="task"
+          name="item"
           type="text" 
           placeholder="Adicione uma nova tarefa" 
-          onChange={handleNewTaskChange}
-          value={newTaskText}
-          onInvalid={handleNewTaskInvalid}
+          onChange={handleNewItemChange}
+          value={newItemText}
+          onInvalid={handleNewItemInvalid}
           className={styles.input}
           required
         />
         <button 
           className={styles.button}
           type="submit"
-          disabled={isNewTaskEmpty} 
+          disabled={isNewItemEmpty} 
         >
           Criar
           <img src={plus} />
@@ -66,7 +66,7 @@ export function Tasks() {
       <header className={styles.tasksInfo}>
         <section className={styles.tasksCreated}>
           <p>Tarefas criadas</p>
-          <p className={styles.valorTasks}>{task.length}</p>
+          <p className={styles.valorTasks}>{item.length}</p>
         </section>
         <section className={styles.tasksFinished}>
           <p>Concluídas</p>
@@ -74,13 +74,14 @@ export function Tasks() {
         </section>
       </header> 
       <div className={styles.content}>  
-      {task.length > 0 ? (
+      {item.length > 0 ? (
         <>
-          {task.map((task) => (
-          <Task
+          {item.map((item) => (
+          <Item
             key={id}
-            textTask={task}
-            onDeleteTask={deleteTask}
+            textItem={item}
+            onDeleteTask={deleteItem}
+            isChecked={false}
           />
           )) }
         </>
