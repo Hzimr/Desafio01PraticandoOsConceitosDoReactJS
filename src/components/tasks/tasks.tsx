@@ -1,17 +1,17 @@
 import styles from './tasksStyles.module.css'
 import plus from '../../assets/plus.svg'
 import { NoTask } from '../notask/notask'
-import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useState, useId } from 'react'
 import { Task } from '../task/task'
 
 export function Tasks() {
-  const [task, setTask] = useState([''])
+  const id = useId();
+  const [task, setTask] = useState<string[]>([])
 
-  const [newTaskText, setNewTaskText] = useState('')
+  const [newTaskText, setNewTaskText] = useState<string>('')
 
   function handleCreateNewTask(event: FormEvent) {
     event.preventDefault()
-    console.log(event.target)
 
     setTask([...task, newTaskText])
     setNewTaskText('')
@@ -39,7 +39,6 @@ export function Tasks() {
 
   return (
     <div className={styles.wrapper}>
-      {/*<NewTask /> */}
       <div>
       <form className={styles.form} onSubmit={handleCreateNewTask}>
         <input
@@ -75,14 +74,20 @@ export function Tasks() {
         </section>
       </header> 
       <div className={styles.content}>  
-      {task.length > 0 && task.map((task) => (
-        <Task
-          key={task}
-          textTask={task}
-          onDeleteTask={deleteTask}
+      {task.length > 0 ? (
+        <>
+          {task.map((task) => (
+          <Task
+            key={id}
+            textTask={task}
+            onDeleteTask={deleteTask}
           />
-        ))}
-        {task.length === 0 && <NoTask />}
+          )) }
+        </>
+        ) : (
+          <NoTask />
+        )
+      }
       </div>
     </div>
   )
