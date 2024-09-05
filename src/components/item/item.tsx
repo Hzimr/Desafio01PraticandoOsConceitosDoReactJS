@@ -23,7 +23,7 @@ export function Item({textItem, onDeleteTask, isChecked}: ItemProps){
     <div className={styles.container}>
       <div>
         <label htmlFor="checkbox" >
-          <input type="checkbox"></input>
+          <input type="checkbox" className={`${styles.checkbox}`}></input>
           <span className={`${styles.checkbox} ${checkboxCheckedClassname}`}>
             {isChecked && <Check size={12} />}
           </span>
