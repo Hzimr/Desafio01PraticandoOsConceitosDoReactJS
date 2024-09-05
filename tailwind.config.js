@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      margin: {
+        topEffect: 'calc(0px - 0.5rem - 7px)',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
