@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       margin: {
-        topEffect: 'calc(0px - 0.5rem - 7px)',
+        topEffect: 'calc(0px - 3.5rem - 7px)',
       },
       colors: {
         blueDark: '#1e6f9f',
