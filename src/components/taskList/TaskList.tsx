@@ -79,7 +79,7 @@ function Task({ task, onChange, onDelete, onToggleCompleted }) {
     taskContent = (
       <>
         <p
-          className={`overflow-auto text-wrap ${
+          className={`w-[36rem] text-wrap break-words ${
             task.completed ? 'line-through opacity-50' : ''
           }`}
         >
