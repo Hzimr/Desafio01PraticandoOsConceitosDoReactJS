@@ -10,13 +10,13 @@ export default function AddTask({ onAddTask }: AddTaskProps) {
   return (
     <div className="mt-topEffect flex items-center justify-center gap-2">
       <input
-        className="border-gray7 bg-gray5 text-gray1 h-14 w-[638px] border-spacing-4 rounded-xl p-4 text-base"
+        className="h-14 w-[638px] border-spacing-4 rounded-xl border-gray7 bg-gray5 p-4 text-base text-gray1"
         placeholder="Adicione uma nova tarefa"
         value={text}
         onChange={(event) => setText(event.target.value)}
       />
       <button
-        className="border-gray7 text-gray1 hover:bg-blue1 bg-blueDark flex h-14 w-[90px] border-spacing-1 cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] p-1 transition-colors"
+        className="flex h-14 w-[90px] border-spacing-1 cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] border-gray7 bg-blueDark p-1 text-gray1 transition-colors hover:bg-blue1"
         onClick={() => {
           setText('')
           onAddTask(text)
