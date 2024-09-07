@@ -5,7 +5,6 @@ import { useReducer } from 'react'
 import AddTask from './components/addTask/AddTask'
 import { Header } from './components/header/header'
 import TaskList from './components/taskList/TaskList'
-import { Tasks } from './components/tasks/tasks'
 
 interface Task {
   id: number
@@ -36,6 +35,15 @@ function tasksReducer(tasks, action) {
     }
     case 'deleted': {
       return tasks.filter((task) => task.id !== action.id)
+    }
+    case 'toggleCompleted': {
+      return tasks.map((task) => {
+        if (task.id === action.id) {
+          return { ...task, completed: !task.completed } // alterna o estado de 'completed'
+        } else {
+          return task
+        }
+      })
     }
     default: {
       throw Error('Unknown action: ' + action.type)
@@ -68,6 +76,13 @@ export function App() {
     })
   }
 
+  function handleToggleCompleted(taskId) {
+    dispatch({
+      type: 'toggleCompleted',
+      id: taskId,
+    })
+  }
+
   return (
     <main className="flex flex-col items-center gap-8">
       <Header />
@@ -76,6 +91,7 @@ export function App() {
         tasks={tasks}
         onChangeTask={handleChangeTask}
         onDeleteTask={handleDeleteTask}
+        onToggleCompleted={handleToggleCompleted}
       />
     </main>
   )
