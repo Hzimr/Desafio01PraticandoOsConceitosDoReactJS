@@ -1,15 +1,31 @@
-import { Check, Trash2 } from 'lucide-react'
-import { useState } from 'react'
+/* eslint-disable prettier/prettier */
+import { Check, Trash2 } from "lucide-react";
+import { useState } from "react";
 
-import { NoTask } from '../notask/notask'
+import { NoTask } from "../notask/notask";
+
+type Task = {
+  id: number;
+  text: string;
+  completed: boolean;
+};
+
+type TaskListProps = {
+  tasks: Task[];
+  onChangeTask: (task: Task) => void;
+  onDeleteTask: (id: number) => void;
+  onToggleCompleted: (id: number) => void;
+};
 
 export default function TaskList({
   tasks,
   onChangeTask,
   onDeleteTask,
   onToggleCompleted,
-}) {
-  const completedTasksCount = tasks.filter((task) => task.completed).length
+}: TaskListProps) {
+  const completedTasksCount = tasks.filter(
+    (task: Task) => task.completed,
+  ).length;
 
   return (
     <>
@@ -37,7 +53,7 @@ export default function TaskList({
       {tasks.length !== 0 && (
         <div className="flex w-[44rem] flex-col items-center justify-center gap-16 pb-4 pt-4">
           <ul className="flex flex-col gap-3">
-            {tasks.map((task) => (
+            {tasks.map((task: Task) => (
               <li key={task.id}>
                 <Task
                   task={task}
@@ -51,43 +67,50 @@ export default function TaskList({
         </div>
       )}
     </>
-  )
+  );
 }
 
-function Task({ task, onChange, onDelete, onToggleCompleted }) {
-  const [isEditing, setIsEditing] = useState(false)
-  let taskContent
+type TaskProps = {
+  task: Task;
+  onChange: (task: Task) => void;
+  onDelete: (id: number) => void;
+  onToggleCompleted: (id: number) => void;
+};
+
+function Task({ task, onChange, onDelete, onToggleCompleted }: TaskProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  let taskContent;
   if (isEditing) {
     taskContent = (
       <>
         <input
           className={`w-[560px] border-spacing-4 rounded-xl border-gray7 bg-gray5 p-4 text-base text-gray1 ${
-            task.completed ? 'line-through opacity-50' : ''
+            task.completed ? "line-through opacity-50" : ""
           }`}
           value={task.text}
           onChange={(e) => {
             onChange({
               ...task,
               text: e.target.value,
-            })
+            });
           }}
         />
         <button onClick={() => setIsEditing(false)}>Save</button>
       </>
-    )
+    );
   } else {
     taskContent = (
       <>
         <p
           className={`w-[36rem] text-wrap break-words ${
-            task.completed ? 'line-through opacity-50' : ''
+            task.completed ? "line-through opacity-50" : ""
           }`}
         >
           {task.text}
         </p>
         <button onClick={() => setIsEditing(true)}>Editar</button>
       </>
-    )
+    );
   }
 
   return (
@@ -100,7 +123,7 @@ function Task({ task, onChange, onDelete, onToggleCompleted }) {
           className="h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-blue1 bg-transparent checked:border-purpleDark checked:bg-purpleDark focus:outline-none focus:ring-2 focus:ring-purple focus:ring-opacity-50"
         />
         <Check
-          className={`pointer-events-none absolute h-4 w-4 text-white ${task.completed ? 'block' : 'hidden'}`}
+          className={`pointer-events-none absolute h-4 w-4 text-white ${task.completed ? "block" : "hidden"}`}
         />
       </label>
 
@@ -114,5 +137,5 @@ function Task({ task, onChange, onDelete, onToggleCompleted }) {
         <Trash2 />
       </button>
     </div>
-  )
+  );
 }

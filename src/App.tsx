@@ -12,7 +12,13 @@ interface Task {
   completed: boolean
 }
 
-function tasksReducer(tasks, action) {
+type Action =
+  | { type: 'added'; id: number; text: string }
+  | { type: 'changed'; task: Task }
+  | { type: 'deleted'; id: number }
+  | { type: 'toggleCompleted'; id: number }
+
+function tasksReducer(tasks: Task[], action: Action): Task[] {
   switch (action.type) {
     case 'added': {
       return [
@@ -46,7 +52,7 @@ function tasksReducer(tasks, action) {
       })
     }
     default: {
-      throw Error('Unknown action: ' + action.type)
+      throw Error('Unknown action: ' + (action as { type: string }).type)
     }
   }
 }
@@ -62,21 +68,21 @@ export function App() {
     })
   }
 
-  function handleChangeTask(task) {
+  function handleChangeTask(task: Task) {
     dispatch({
       type: 'changed',
       task,
     })
   }
 
-  function handleDeleteTask(taskId) {
+  function handleDeleteTask(taskId: number) {
     dispatch({
       type: 'deleted',
       id: taskId,
     })
   }
 
-  function handleToggleCompleted(taskId) {
+  function handleToggleCompleted(taskId: number) {
     dispatch({
       type: 'toggleCompleted',
       id: taskId,
